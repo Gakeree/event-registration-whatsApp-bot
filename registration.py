@@ -34,6 +34,9 @@ def handle_message(body):
                          "1. VIP (KES 5,000)\n" +
                          "2. Regular (KES 2,000)\n" +
                          "3. Student (KES 1,000)\n")
+
+
+                         #location information
         elif service == "Location information":
            event_location = "South Eastern Kenya University"
            event_location_url = f"https://goo.gl/maps/hQ72SG4vHmjgkbZT7?coh=178573&entry=tt/?api=1&query={urllib.parse.quote(event_location)}"
