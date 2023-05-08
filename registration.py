@@ -28,9 +28,13 @@ def handle_message(body):
         if service == "Event registration":
             resp.message("To register for the event, please send your name, email, and phone number separated by commas.")
         elif service == "Ticket payment":
-            resp.message("To make a payment, please visit our website at example.com/payments.")
+            # Add ticket prices to choose from
+            resp.message("Please select a ticket price from the following options:\n" +
+                         "1. VIP (KES 5,000)\n" +
+                         "2. Regular (KES 2,000)\n" +
+                         "3. Student (KES 1,000)\n")
         elif service == "Location information":
-            resp.message("The event will be held at  South Eastern Kenya University.")
+            resp.message("The event will be held at South Eastern Kenya University.")
         responded = True
 
     name = None
@@ -70,6 +74,7 @@ def handle_message(body):
         )
 
     return str(resp)
+
 
 
 @app.route('/bot', methods=['POST'])
