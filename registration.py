@@ -1,8 +1,9 @@
-from flask import Flask, request
+from flask import Flask, request, session
 from twilio.twiml.messaging_response import MessagingResponse
 import sqlite3
-
+import urllib
 app = Flask(__name__)
+ 
 
 SERVICES = {
     "1": "Event registration",
@@ -34,8 +35,10 @@ def handle_message(body):
                          "2. Regular (KES 2,000)\n" +
                          "3. Student (KES 1,000)\n")
         elif service == "Location information":
-            resp.message("The event will be held at South Eastern Kenya University.")
-        responded = True
+           event_location = "South Eastern Kenya University"
+           event_location_url = f"https://goo.gl/maps/hQ72SG4vHmjgkbZT7?coh=178573&entry=tt/?api=1&query={urllib.parse.quote(event_location)}"
+           resp.message(f"The event will be held at {event_location}. Here is the Google Maps link: {event_location_url}")
+           responded = True
 
     name = None
     email = None
@@ -64,6 +67,17 @@ def handle_message(body):
             print(e)
             resp.message("An error occurred while registering for the event. Please try again later.")
             responded = True
+
+    if not responded:
+        resp.message(
+            "Sorry, I didn't understand that. Please select a service by replying with the corresponding number:\n" +
+            "1. Event registration\n" +
+            "2. Ticket payment\n" +
+            "3. Location information\n"
+        )
+
+    return str(resp)
+
 
     if not responded:
         resp.message(
